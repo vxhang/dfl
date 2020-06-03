@@ -77,7 +77,7 @@ class nn():
             if first_run:
                 io.log_info("Caching GPU kernels...")
 
-            import tensorflow.compat.v1 as tf
+            import tensorflow as tf
             nn.tf = tf
             
             import logging
