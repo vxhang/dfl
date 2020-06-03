@@ -197,6 +197,9 @@ class Subprocessor(object):
 
         #waiting subprocesses their success(or not) initialization
         while True:
+            print("++++++++++++")
+            print(cli.c2s.get().get('op',''))
+            print(cli.c2s.get()['msg'])
             for cli in self.clis[:]:
                 while not cli.c2s.empty():
                     obj = cli.c2s.get()
