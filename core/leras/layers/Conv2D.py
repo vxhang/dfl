@@ -73,6 +73,9 @@ class Conv2D(nn.LayerBase):
         if kernel_initializer is None:
             kernel_initializer = nn.initializers.ca()
 
+        print(self.kernel_size)
+        print(self.in_ch)
+        print(self.out_ch)
         self.weight = tf.get_variable("weight", (self.kernel_size,self.kernel_size,self.in_ch,self.out_ch), dtype=self.dtype, initializer=kernel_initializer, trainable=self.trainable )
 
         if self.use_bias:
