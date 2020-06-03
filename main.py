@@ -200,7 +200,7 @@ if __name__ == "__main__":
     def process_videoed_denoise_image_sequence(arguments):
         osex.set_process_lowest_prio()
         from mainscripts import VideoEd
-        VideoEd.denoise_image_sequence (arguments.input_dir, arguments.factor)
+        VideoEd.denoise_image_sequence (arguments.input_dir, factor = arguments.factor)
     p = videoed_parser.add_parser( "denoise-image-sequence", help="Denoise sequence of images, keeping sharp edges. Helps to remove pixel shake from the predicted face.")
     p.add_argument('--input-dir', required=True, action=fixPathAction, dest="input_dir", help="Input directory to be processed.")
     p.add_argument('--factor', type=int, dest="factor", default=None, help="Denoise factor (1-20).")
