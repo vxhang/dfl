@@ -78,6 +78,7 @@ class nn():
                 io.log_info("Caching GPU kernels...")
 
             import tensorflow.compat.v1 as tf
+            tf.disable_eager_execution()
             nn.tf = tf
             
             import logging
