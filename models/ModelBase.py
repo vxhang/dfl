@@ -159,6 +159,8 @@ class ModelBase(object):
                                 if not cpu_only else nn.DeviceConfig.CPU()
 
         nn.initialize(self.device_config)
+                         
+        print(3)
 
         ####
         self.default_options_path = saved_models_path / f'{self.model_class_name}_default_options.dat'
@@ -168,26 +170,32 @@ class ModelBase(object):
                 self.default_options = pickle.loads ( self.default_options_path.read_bytes() )
             except:
                 pass
-
+       
+        print(4)
         self.choose_preview_history = False
         self.batch_size = self.load_or_def_option('batch_size', 1)
         #####
-
+       
+        print(5)
         io.input_skip_pending()
         self.on_initialize_options()
-
+       
+        print(6)
         if self.is_first_run():
             # save as default options only for first run model initialize
             self.default_options_path.write_bytes( pickle.dumps (self.options) )
-
+       
+        print(7)
         self.autobackup_hour = self.options.get('autobackup_hour', 0)
         self.write_preview_history = self.options.get('write_preview_history', False)
         self.target_iter = self.options.get('target_iter',0)
         self.random_flip = self.options.get('random_flip',True)
-
+       
+        print(8)
         self.on_initialize()
         self.options['batch_size'] = self.batch_size
-
+       
+        print(9)
         if self.is_training:
             self.preview_history_path = self.saved_models_path / ( f'{self.get_model_name()}_history' )
             self.autobackups_path     = self.saved_models_path / ( f'{self.get_model_name()}_autobackups' )
@@ -214,7 +222,8 @@ class ModelBase(object):
 
                 if not self.autobackups_path.exists():
                     self.autobackups_path.mkdir(exist_ok=True)
-
+       
+        print(10)
         io.log_info( self.get_summary_text() )
         
     def update_sample_for_preview(self, choose_preview_history=False, force_new=False):
