@@ -46,8 +46,8 @@ def init_weights(weights):
             ops.append (initializer)
 
     print(17.73)
-    #if len(ops) != 0:
-    #    nn.tf_sess.run (ops)
+    if len(ops) != 0:
+        nn.tf_sess.run (ops)
 
     print(17.74)
     if len(ca_tuples) != 0:
