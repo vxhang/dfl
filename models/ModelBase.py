@@ -192,7 +192,7 @@ class ModelBase(object):
         self.random_flip = self.options.get('random_flip',True)
        
         print(8)
-        #self.on_initialize()
+        self.on_initialize()
         print(9)
         self.options['batch_size'] = self.batch_size
        
