@@ -762,14 +762,14 @@ def main(detector=None,
     faces_detected = 0
     if images_found != 0:
         if detector == 'manual':
-            io.log_info ('Performing manual extract...')
+            print('Performing manual extract...')
             data = ExtractSubprocessor ([ ExtractSubprocessor.Data(Path(filename)) for filename in input_path_image_paths ], 'landmarks-manual', image_size, face_type, output_debug_path if output_debug else None, manual_window_size=manual_window_size, device_config=device_config).run()
 
-            io.log_info ('Performing 3rd pass...')
+            print('Performing 3rd pass...')
             data = ExtractSubprocessor (data, 'final', image_size, face_type, output_debug_path if output_debug else None, final_output_path=output_path, device_config=device_config).run()
 
         else:
-            io.log_info ('Extracting faces...')
+            print('Extracting faces...')
             data = ExtractSubprocessor ([ ExtractSubprocessor.Data(Path(filename)) for filename in input_path_image_paths ],
                                          'all',
                                          image_size,
@@ -783,16 +783,16 @@ def main(detector=None,
 
         if manual_fix:
             if all ( np.array ( [ d.faces_detected > 0 for d in data] ) == True ):
-                io.log_info ('All faces are detected, manual fix not needed.')
+                print('All faces are detected, manual fix not needed.')
             else:
                 fix_data = [ ExtractSubprocessor.Data(d.filepath) for d in data if d.faces_detected == 0 ]
-                io.log_info ('Performing manual fix for %d images...' % (len(fix_data)) )
+                print('Performing manual fix for %d images...' % (len(fix_data)) )
                 fix_data = ExtractSubprocessor (fix_data, 'landmarks-manual', image_size, face_type, output_debug_path if output_debug else None, manual_window_size=manual_window_size, device_config=device_config).run()
                 fix_data = ExtractSubprocessor (fix_data, 'final', image_size, face_type, output_debug_path if output_debug else None, final_output_path=output_path, device_config=device_config).run()
                 faces_detected += sum([d.faces_detected for d in fix_data])
 
 
-    io.log_info ('-------------------------')
-    io.log_info ('Images found:        %d' % (images_found) )
-    io.log_info ('Faces detected:      %d' % (faces_detected) )
-    io.log_info ('-------------------------')
+    print('-------------------------')
+    print('Images found:        %d' % (images_found) )
+    print('Faces detected:      %d' % (faces_detected) )
+    print('-------------------------')
