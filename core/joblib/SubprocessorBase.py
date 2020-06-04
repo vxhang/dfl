@@ -200,10 +200,10 @@ class Subprocessor(object):
             print("++++++++++++")
             print("--------start_rond")
             for cli in self.clis[:]:
-                while not cli.c2s.empty():
-                    print(cli.c2s.get())
-                    
+                while not cli.c2s.empty():                    
                     obj = cli.c2s.get()
+                    print(obj)
+                    
                     op = obj.get('op','')
                     if op == 'init_ok':
                         cli.state = 0
@@ -236,10 +236,10 @@ class Subprocessor(object):
             print("++++++++++++")
             print("--------start_rond1")
             for cli in self.clis[:]:
-                while not cli.c2s.empty():
-                    print(cli.c2s.get())
-                    
+                while not cli.c2s.empty():                    
                     obj = cli.c2s.get()
+                    print(obj)
+                    
                     op = obj.get('op','')
                     if op == 'success':
                         #success processed data, return data and result to on_result
