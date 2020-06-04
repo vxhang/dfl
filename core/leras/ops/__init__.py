@@ -30,6 +30,7 @@ def batch_set_value(tuples):
 nn.batch_set_value = batch_set_value
 
 def init_weights(weights):
+    print(17.72)
     ops = []
 
     ca_tuples_w = []
