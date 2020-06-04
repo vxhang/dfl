@@ -271,7 +271,7 @@ class ModelBase(object):
 
     def ask_autobackup_hour(self, default_value=0):
         default_autobackup_hour = self.options['autobackup_hour'] = self.load_or_def_option('autobackup_hour', default_value)
-        self.options['autobackup_hour'] = io.input_int(f"Autobackup every N hour", default_autobackup_hour, add_info="0..24", help_message="Autobackup model files with preview every N hour. Latest backup located in model/<>_autobackups/01")
+        self.options['autobackup_hour'] = 1 #io.input_int(f"Autobackup every N hour", default_autobackup_hour, add_info="0..24", help_message="Autobackup model files with preview every N hour. Latest backup located in model/<>_autobackups/01")
 
     def ask_write_preview_history(self, default_value=False):
         default_write_preview_history = self.load_or_def_option('write_preview_history', default_value)
