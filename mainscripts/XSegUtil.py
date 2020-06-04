@@ -90,7 +90,7 @@ def remove_xseg(input_path):
     io.log_info('!!! WARNING : APPLIED XSEG MASKS WILL BE REMOVED FROM THE FRAMES !!!')
     io.log_info('!!! WARNING : APPLIED XSEG MASKS WILL BE REMOVED FROM THE FRAMES !!!')
     io.log_info('!!! WARNING : APPLIED XSEG MASKS WILL BE REMOVED FROM THE FRAMES !!!')
-    io.input_str('Press enter to continue.')
+    #io.input_str('Press enter to continue.')
                                
     images_paths = pathex.get_image_paths(input_path, return_Path_class=True)
     
