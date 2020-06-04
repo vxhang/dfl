@@ -153,7 +153,7 @@ class SAEHDModel(ModelBase):
 
         print(12)
         models_opt_on_gpu = False if len(devices) == 0 else self.options['models_opt_on_gpu']
-        models_opt_device = '/GPU:0' if models_opt_on_gpu and self.is_training else '/CPU:0'
+        models_opt_device = '/GPU:0' #if models_opt_on_gpu and self.is_training else '/CPU:0'
         optimizer_vars_on_cpu = models_opt_device=='/CPU:0'
 
         input_ch=3
@@ -162,7 +162,8 @@ class SAEHDModel(ModelBase):
         self.model_filename_list = []
 
         print(13)
-        with tf.device ('/CPU:0'):
+        #with tf.device ('/CPU:0'):
+        with tf.device ('/GPU:0'):
             #Place holders on CPU
             self.warped_src = tf.placeholder (nn.floatx, bgr_shape)
             self.warped_dst = tf.placeholder (nn.floatx, bgr_shape)
@@ -268,9 +269,11 @@ class SAEHDModel(ModelBase):
             gpu_D_code_loss_gvs = []
             gpu_D_src_dst_loss_gvs = []
             for gpu_id in range(gpu_count):
-                with tf.device( f'/GPU:{gpu_id}' if len(devices) != 0 else f'/CPU:0' ):
+                #with tf.device( f'/GPU:{gpu_id}' if len(devices) != 0 else f'/CPU:0' ):
+                with tf.device(f'/GPU:0'):
 
-                    with tf.device(f'/CPU:0'):
+                    #with tf.device(f'/CPU:0'):
+                    if True:
                         # slice on CPU, otherwise all batch data will be transfered to GPU first
                         batch_slice = slice( gpu_id*bs_per_gpu, (gpu_id+1)*bs_per_gpu )
                         gpu_warped_src      = self.warped_src [batch_slice,:,:,:]
@@ -461,7 +464,8 @@ class SAEHDModel(ModelBase):
             self.AE_view = AE_view
         else:
             # Initializing merge function
-            with tf.device( f'/GPU:0' if len(devices) != 0 else f'/CPU:0'):
+            #with tf.device( f'/GPU:0' if len(devices) != 0 else f'/CPU:0'):
+            with tf.device(f'/GPU:0'):
                 if 'df' in archi:
                     gpu_dst_code     = self.inter(self.encoder(self.warped_dst))
                     gpu_pred_src_dst, gpu_pred_src_dstm = self.decoder_src(gpu_dst_code)
