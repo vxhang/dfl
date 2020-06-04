@@ -99,11 +99,12 @@ class nn():
             
             # Configure tensorflow session-config
             if False: #len(device_config.devices) == 0:
-                nn.tf_default_device = "/CPU:0"
+                #nn.tf_default_device = "/CPU:0"
                 config = tf.ConfigProto(device_count={'GPU': 0})
             else:
                 nn.tf_default_device = "/GPU:0"
-                config = tf.ConfigProto()
+                #config = tf.ConfigProto()
+                config = tf.ConfigProto(device_count={'GPU': 0})
                 config.gpu_options.visible_device_list = "0" #','.join([str(device.index) for device in device_config.devices])
 
             config.gpu_options.force_gpu_compatible = True
@@ -112,6 +113,7 @@ class nn():
             
         print(1)
         if nn.tf_sess is None:
+            print(2)
             nn.tf_sess = tf.Session(config=nn.tf_sess_config)
 
         if floatx == "float32":
