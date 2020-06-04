@@ -86,7 +86,7 @@ class ExtractSubprocessor(Subprocessor):
                 # for head type, extract "3D landmarks"
                 self.landmarks_extractor = facelib.FANExtractor(landmarks_3D=self.face_type >= FaceType.HEAD,
                                                                 place_model_on_cpu=place_model_on_cpu)
-             else:
+            else:
                 print(0)
 
             self.cached_image = (None, None)
