@@ -117,6 +117,7 @@ class SAEHDModel(ModelBase):
 
     #override
     def on_initialize(self):
+        print(11)
         #device_config = nn.getCurrentDeviceConfig()
         device_config = nn.DeviceConfig.BestGPU()
         
@@ -150,6 +151,7 @@ class SAEHDModel(ModelBase):
         if ct_mode == 'none':
             ct_mode = None
 
+        print(12)
         models_opt_on_gpu = False if len(devices) == 0 else self.options['models_opt_on_gpu']
         models_opt_device = '/GPU:0' if models_opt_on_gpu and self.is_training else '/CPU:0'
         optimizer_vars_on_cpu = models_opt_device=='/CPU:0'
@@ -159,6 +161,7 @@ class SAEHDModel(ModelBase):
         mask_shape = nn.get4Dshape(resolution,resolution,1)
         self.model_filename_list = []
 
+        print(13)
         with tf.device ('/CPU:0'):
             #Place holders on CPU
             self.warped_src = tf.placeholder (nn.floatx, bgr_shape)
@@ -170,9 +173,11 @@ class SAEHDModel(ModelBase):
             self.target_srcm_all = tf.placeholder (nn.floatx, mask_shape)
             self.target_dstm_all = tf.placeholder (nn.floatx, mask_shape)
 
+        print(14)
         # Initializing model classes
         model_archi = nn.DeepFakeArchi(resolution, mod='uhd' if 'uhd' in archi else None)
 
+        print(15)
         with tf.device (models_opt_device):
             if 'df' in archi:
                 self.encoder = model_archi.Encoder(in_ch=input_ch, e_ch=e_dims, is_hd=is_hd, name='encoder')
@@ -241,6 +246,7 @@ class SAEHDModel(ModelBase):
                     self.D_src_dst_opt.initialize_variables ( self.D_src.get_weights()+self.D_dst.get_weights(), vars_on_cpu=optimizer_vars_on_cpu)
                     self.model_filename_list += [ (self.D_src_dst_opt, 'D_src_dst_opt.npy') ]
 
+        print(16)
         if self.is_training:
             # Adjust batch size for multiple GPU
             gpu_count = max(1, len(devices) )
@@ -477,6 +483,7 @@ class SAEHDModel(ModelBase):
 
             self.AE_merge = AE_merge
 
+        print(17)
         # Loading/initializing all models/optimizers weights
         for model, filename in io.progress_bar_generator(self.model_filename_list, "Initializing models"):
             if self.pretrain_just_disabled:
@@ -496,6 +503,7 @@ class SAEHDModel(ModelBase):
             if do_init:
                 model.init_weights()
 
+        print(18)
         # initializing sample generators
         if self.is_training:
             training_data_src_path = self.training_data_src_path if not self.pretrain else self.get_pretraining_data_path()
@@ -533,6 +541,8 @@ class SAEHDModel(ModelBase):
             if self.pretrain_just_disabled:
                 self.update_sample_for_preview(force_new=True)
 
+        print(19)
+        
     #override
     def get_model_filename_list(self):
         return self.model_filename_list
