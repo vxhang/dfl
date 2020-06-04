@@ -176,7 +176,9 @@ class S3FDExtractor(object):
         return False #pass exception between __enter__ and __exit__ to outter level
 
     def extract (self, input_image, is_bgr=True, is_remove_intersects=False):
-
+        print("--------------s3fd")
+        print(place_model_on_cpu)
+        
         if is_bgr:
             input_image = input_image[:,:,::-1]
             is_bgr = False
@@ -190,7 +192,9 @@ class S3FDExtractor(object):
         input_scale = d / scale_to
         input_image = cv2.resize (input_image, ( int(w/input_scale), int(h/input_scale) ), interpolation=cv2.INTER_LINEAR)
 
+        print("--------------before_run")
         olist = self.model.run ([ input_image[None,...] ] )
+        print("--------------after_run")
 
         detected_faces = []
         for ltrb in self.refine (olist):
