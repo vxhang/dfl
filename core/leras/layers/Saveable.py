@@ -98,6 +98,7 @@ class Saveable():
         return True
 
     def init_weights(self):
+        print(17.71)
         nn.init_weights(self.get_weights())
     
 nn.Saveable = Saveable
