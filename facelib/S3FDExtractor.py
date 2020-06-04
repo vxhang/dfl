@@ -193,6 +193,7 @@ class S3FDExtractor(object):
         input_image = cv2.resize (input_image, ( int(w/input_scale), int(h/input_scale) ), interpolation=cv2.INTER_LINEAR)
 
         print("--------------before_run")
+        print(self.model.summary())
         olist = self.model.run ([ input_image[None,...] ] )
         print("--------------after_run")
 
