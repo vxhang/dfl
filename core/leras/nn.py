@@ -102,12 +102,10 @@ class nn():
                 #nn.tf_default_device = "/CPU:0"
                 config = tf.ConfigProto(device_count={'GPU': 0})
             else:
-                #nn.tf_default_device = "/GPU:0"
-                nn.tf_default_device = "/XLA_GPU:0"
+                nn.tf_default_device = "/GPU:0"
                 
                 #config = tf.ConfigProto()
-                #config = tf.ConfigProto(device_count={'GPU': 0})
-                config = tf.ConfigProto(device_count={'XLA_GPU': 0})
+                config = tf.ConfigProto(device_count={'GPU': 0})
                 config.gpu_options.visible_device_list = "0" #','.join([str(device.index) for device in device_config.devices])
 
             config.gpu_options.force_gpu_compatible = True
