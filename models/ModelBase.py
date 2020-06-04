@@ -270,30 +270,30 @@ class ModelBase(object):
         return self.is_training and self.iter != 0 and io.input_in_time ("Press enter in 2 seconds to override model settings.", 5 if io.is_colab() else 2 )
 
     def ask_autobackup_hour(self, default_value=0):
-        default_autobackup_hour = self.options['autobackup_hour'] = self.load_or_def_option('autobackup_hour', default_value)
-        self.options['autobackup_hour'] = 1 #io.input_int(f"Autobackup every N hour", default_autobackup_hour, add_info="0..24", help_message="Autobackup model files with preview every N hour. Latest backup located in model/<>_autobackups/01")
+        default_autobackup_hour = 1 #self.options['autobackup_hour'] = self.load_or_def_option('autobackup_hour', default_value)
+        self.options['autobackup_hour'] = default_autobackup_hour #io.input_int(f"Autobackup every N hour", default_autobackup_hour, add_info="0..24", help_message="Autobackup model files with preview every N hour. Latest backup located in model/<>_autobackups/01")
 
     def ask_write_preview_history(self, default_value=False):
         default_write_preview_history = self.load_or_def_option('write_preview_history', default_value)
-        self.options['write_preview_history'] = io.input_bool(f"Write preview history", default_write_preview_history, help_message="Preview history will be writed to <ModelName>_history folder.")
+        self.options['write_preview_history'] = default_write_preview_history #io.input_bool(f"Write preview history", default_write_preview_history, help_message="Preview history will be writed to <ModelName>_history folder.")
 
         if self.options['write_preview_history']:
             if io.is_support_windows():
-                self.choose_preview_history = io.input_bool("Choose image for the preview history", False)
+                self.choose_preview_history = default_write_preview_history #io.input_bool("Choose image for the preview history", False)
             elif io.is_colab():
-                self.choose_preview_history = io.input_bool("Randomly choose new image for preview history", False, help_message="Preview image history will stay stuck with old faces if you reuse the same model on different celebs. Choose no unless you are changing src/dst to a new person")
+                self.choose_preview_history = default_write_preview_history #io.input_bool("Randomly choose new image for preview history", False, help_message="Preview image history will stay stuck with old faces if you reuse the same model on different celebs. Choose no unless you are changing src/dst to a new person")
 
     def ask_target_iter(self, default_value=0):
-        default_target_iter = self.load_or_def_option('target_iter', default_value)
-        self.options['target_iter'] = max(0, io.input_int("Target iteration", default_target_iter))
+        default_target_iter = 0 #self.load_or_def_option('target_iter', default_value)
+        self.options['target_iter'] = default_target_iter #max(0, io.input_int("Target iteration", default_target_iter))
 
     def ask_random_flip(self):
-        default_random_flip = self.load_or_def_option('random_flip', True)
-        self.options['random_flip'] = io.input_bool("Flip faces randomly", default_random_flip, help_message="Predicted face will look more naturally without this option, but src faceset should cover all face directions as dst faceset.")
+        default_random_flip = True #self.load_or_def_option('random_flip', True)
+        self.options['random_flip'] = Trdefault_random_flipue #io.input_bool("Flip faces randomly", default_random_flip, help_message="Predicted face will look more naturally without this option, but src faceset should cover all face directions as dst faceset.")
 
     def ask_batch_size(self, suggest_batch_size=None):
-        default_batch_size = self.load_or_def_option('batch_size', suggest_batch_size or self.batch_size)
-        self.options['batch_size'] = self.batch_size = max(0, io.input_int("Batch_size", default_batch_size, help_message="Larger batch size is better for NN's generalization, but it can cause Out of Memory error. Tune this value for your videocard manually."))
+        default_batch_size = 200 #self.load_or_def_option('batch_size', suggest_batch_size or self.batch_size)
+        self.options['batch_size'] = default_batch_size #self.batch_size = max(0, io.input_int("Batch_size", default_batch_size, help_message="Larger batch size is better for NN's generalization, but it can cause Out of Memory error. Tune this value for your videocard manually."))
 
 
     #overridable
