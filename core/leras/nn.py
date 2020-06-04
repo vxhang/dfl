@@ -44,7 +44,9 @@ class nn():
     @staticmethod
     def initialize(device_config=None, floatx="float32", data_format="NHWC"):
 
+        print("------select tf")
         if nn.tf is None:
+            print(0)
             if device_config is None:
                 device_config = nn.getCurrentDeviceConfig()
             nn.setCurrentDeviceConfig(device_config)
@@ -106,6 +108,7 @@ class nn():
             config.gpu_options.allow_growth = True
             nn.tf_sess_config = config
             
+        print(1)
         if nn.tf_sess is None:
             nn.tf_sess = tf.Session(config=nn.tf_sess_config)
 
