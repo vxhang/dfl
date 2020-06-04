@@ -177,7 +177,7 @@ class S3FDExtractor(object):
 
     def extract (self, input_image, is_bgr=True, is_remove_intersects=False):
         print("--------------s3fd")
-        print(place_model_on_cpu)
+        print("--------------start_extract")
         
         if is_bgr:
             input_image = input_image[:,:,::-1]
