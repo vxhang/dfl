@@ -45,6 +45,7 @@ class nn():
     def initialize(device_config=None, floatx="float32", data_format="NHWC"):
 
         print("------select tf")
+        device_config = nn.DeviceConfig([0])
         print(device_config)
         if nn.tf is None:
             print(0)
