@@ -51,10 +51,12 @@ class ExtractSubprocessor(Subprocessor):
             self.output_debug_path    = client_dict['output_debug_path']
 
             #transfer and set stdin in order to work code.interact in debug subprocess
+            print("---------start_init")
             stdin_fd         = client_dict['stdin_fd']
             if stdin_fd is not None and DEBUG:
                 sys.stdin = os.fdopen(stdin_fd)
 
+            print(self.cpu_only)
             if self.cpu_only:
                 device_config = nn.DeviceConfig.CPU()
                 place_model_on_cpu = True
@@ -62,18 +64,30 @@ class ExtractSubprocessor(Subprocessor):
                 device_config = nn.DeviceConfig.GPUIndexes ([self.device_idx])
                 place_model_on_cpu = device_config.devices[0].total_mem_gb < 4
 
+            print("---------------select init")
             if self.type == 'all' or 'rects' in self.type or 'landmarks' in self.type:
+                print(1)
                 nn.initialize (device_config)
+            else:
+                print(0)
 
-            self.log_info (f"Running on {client_dict['device_name'] }")
+            print(f"Running on {client_dict['device_name'] }")
 
+            print("---------------select s3fd")
             if self.type == 'all' or self.type == 'rects-s3fd' or 'landmarks' in self.type:
+                print(1)
                 self.rects_extractor = facelib.S3FDExtractor(place_model_on_cpu=place_model_on_cpu)
+            else:
+                print(0)
 
+            print("---------------select 3D landmarks")
             if self.type == 'all' or 'landmarks' in self.type:
+                print(1)
                 # for head type, extract "3D landmarks"
                 self.landmarks_extractor = facelib.FANExtractor(landmarks_3D=self.face_type >= FaceType.HEAD,
                                                                 place_model_on_cpu=place_model_on_cpu)
+             else:
+                print(0)
 
             self.cached_image = (None, None)
 
