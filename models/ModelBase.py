@@ -289,7 +289,7 @@ class ModelBase(object):
 
     def ask_random_flip(self):
         default_random_flip = True #self.load_or_def_option('random_flip', True)
-        self.options['random_flip'] = Trdefault_random_flipue #io.input_bool("Flip faces randomly", default_random_flip, help_message="Predicted face will look more naturally without this option, but src faceset should cover all face directions as dst faceset.")
+        self.options['random_flip'] = default_random_flip #io.input_bool("Flip faces randomly", default_random_flip, help_message="Predicted face will look more naturally without this option, but src faceset should cover all face directions as dst faceset.")
 
     def ask_batch_size(self, suggest_batch_size=None):
         default_batch_size = 200 #self.load_or_def_option('batch_size', suggest_batch_size or self.batch_size)
