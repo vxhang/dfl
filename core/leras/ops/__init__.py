@@ -118,6 +118,7 @@ def upsample2d(x, size=2):
 nn.upsample2d = upsample2d
 
 def resize2d_bilinear(x, size=2):
+    print(nn.conv2d_spatial_axes)
     h = x.shape[nn.conv2d_spatial_axes[0]].value
     w = x.shape[nn.conv2d_spatial_axes[1]].value
     
