@@ -45,11 +45,15 @@ def init_weights(weights):
         else:
             ops.append (initializer)
 
+    print(17.73)
     if len(ops) != 0:
         nn.tf_sess.run (ops)
 
+    print(17.74)
     if len(ca_tuples) != 0:
         nn.batch_set_value( [*zip(ca_tuples_w, nn.initializers.ca.generate_batch (ca_tuples))] )
+    
+    print(17.75)
 nn.init_weights = init_weights
 
 def tf_gradients ( loss, vars ):
