@@ -117,7 +117,9 @@ class SAEHDModel(ModelBase):
 
     #override
     def on_initialize(self):
-        device_config = nn.getCurrentDeviceConfig()
+        #device_config = nn.getCurrentDeviceConfig()
+        device_config = nn.DeviceConfig.BestGPU()
+        
         devices = device_config.devices
         self.model_data_format = "NCHW" if len(devices) != 0 and not self.is_debug() else "NHWC"
         nn.initialize(data_format=self.model_data_format)
