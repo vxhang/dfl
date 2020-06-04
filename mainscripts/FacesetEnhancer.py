@@ -143,7 +143,7 @@ def process_folder ( dirpath, cpu_only=False, force_gpu_idxs=None ):
     image_paths = [Path(x) for x in pathex.get_image_paths( dirpath )]
     result = FacesetEnhancerSubprocessor ( image_paths, output_dirpath, device_config=device_config).run()
 
-    is_merge = io.input_bool (f"\r\nMerge {output_dirpath_parts} to {dirpath_parts} ?", True)
+    is_merge = True #io.input_bool (f"\r\nMerge {output_dirpath_parts} to {dirpath_parts} ?", True)
     if is_merge:
         io.log_info (f"Copying processed files to {dirpath_parts}")
 
