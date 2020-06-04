@@ -690,7 +690,8 @@ def main(detector=None,
          cpu_only = False,
          force_gpu_idxs = None,
          ):
-         
+    print("------------start_extractor")
+                           
     if not input_path.exists():
         io.log_err ('Input directory not found. Please ensure it exists.')
         return
