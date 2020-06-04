@@ -490,7 +490,9 @@ class SAEHDModel(ModelBase):
         print(17)
         # Loading/initializing all models/optimizers weights
         for model, filename in io.progress_bar_generator(self.model_filename_list, "Initializing models"):
+            print(17.1)
             if self.pretrain_just_disabled:
+                print(17.2)
                 do_init = False
                 if 'df' in archi:
                     if model == self.inter:
@@ -499,13 +501,19 @@ class SAEHDModel(ModelBase):
                     if model == self.inter_AB or model == self.inter_B:
                         do_init = True
             else:
+                print(17.3)
                 do_init = self.is_first_run()
 
+            print(17.4)
             if not do_init:
+                print(17.5)
                 do_init = not model.load_weights( self.get_strpath_storage_for_file(filename) )
 
+            print(17.6)
             if do_init:
+                print(17.7)
                 model.init_weights()
+            print(17.8)
 
         print(18)
         # initializing sample generators
