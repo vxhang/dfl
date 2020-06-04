@@ -199,6 +199,7 @@ class Subprocessor(object):
         while True:
             print("++++++++++++")
             print(cli.c2s.get())
+            print("--------start_rond")
             for cli in self.clis[:]:
                 while not cli.c2s.empty():
                     obj = cli.c2s.get()
@@ -216,7 +217,10 @@ class Subprocessor(object):
             if all ([cli.state == 0 for cli in self.clis]):
                 break
             io.process_messages(0.005)
+            
+            print("--------end_rond")
 
+        print("--------end_loop")
         if len(self.clis) == 0:
             raise Exception ( "Unable to start subprocesses." )
 
@@ -224,8 +228,13 @@ class Subprocessor(object):
 
         self.on_clients_initialized()
 
+        print("--------end_init")
         #main loop of data processing
         while True:
+            
+            print("++++++++++++")
+            print(cli.c2s.get())
+            print("--------start_rond1")
             for cli in self.clis[:]:
                 while not cli.c2s.empty():
                     obj = cli.c2s.get()
@@ -249,6 +258,7 @@ class Subprocessor(object):
                     elif op == 'progress_bar_inc':
                         io.progress_bar_inc(obj['c'])
 
+            print("--------start_rond2")
             for cli in self.clis[:]:
                 if cli.state == 1:
                     if cli.sent_time != 0 and self.no_response_time_sec != 0 and (time.time() - cli.sent_time) > self.no_response_time_sec:
@@ -258,6 +268,7 @@ class Subprocessor(object):
                         cli.kill()
                         self.clis.remove(cli)
 
+            print("--------start_rond3")
             for cli in self.clis[:]:
                 if cli.state == 0:
                     #free state of subprocess, get some data from get_data
@@ -269,15 +280,19 @@ class Subprocessor(object):
                         cli.sent_data = data
                         cli.state = 1
 
+            print("--------start_rond4")
             if self.io_loop_sleep_time != 0:
                 io.process_messages(self.io_loop_sleep_time)
 
+            print("--------start_rond5")
             if self.on_tick() and all ([cli.state == 0 for cli in self.clis]):
                 #all subprocesses free and no more data available to process, ending loop
                 break
 
+            print("--------end_rond")
 
 
+        print("--------end_loop")
         #gracefully terminating subprocesses
         for cli in self.clis[:]:
             cli.s2c.put ( {'op': 'close'} )
