@@ -125,7 +125,7 @@ class FacesetEnhancerSubprocessor(Subprocessor):
 def process_folder ( dirpath, cpu_only=False, force_gpu_idxs=None ):
     #device_config = nn.DeviceConfig.GPUIndexes( force_gpu_idxs or nn.ask_choose_device_idxs(suggest_all_gpu=True) ) \
     #                if not cpu_only else nn.DeviceConfig.CPU()
-    device_config = nn.DeviceConfig.GPUIndexes( nn.ask_choose_device_idxs(suggest_all_gpu=True) )
+    device_config = nn.DeviceConfig.GPUIndexes(0)
 
     output_dirpath = dirpath.parent / (dirpath.name + '_enhanced')
     output_dirpath.mkdir (exist_ok=True, parents=True)
