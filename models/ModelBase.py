@@ -193,9 +193,10 @@ class ModelBase(object):
        
         print(8)
         #self.on_initialize()
+        print(9)
         self.options['batch_size'] = self.batch_size
        
-        print(9)
+        print(10)
         if self.is_training:
             self.preview_history_path = self.saved_models_path / ( f'{self.get_model_name()}_history' )
             self.autobackups_path     = self.saved_models_path / ( f'{self.get_model_name()}_autobackups' )
